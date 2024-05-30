@@ -21,7 +21,7 @@ public static class EndpointsMapping
                 .Produces<ResponseBase<object>>(StatusCodes.Status404NotFound);
 
             group.MapGet("/{id}", ([FromServices] GetMotorcyclesEndpoint endpoint, [FromRoute] Guid id) => endpoint
-                .GetMotorcycles(new GetMotorcyclesInput(Id: id)))
+                .GetMotorcycles(new GetMotorcyclesInput(id)))
 
                 .WithDescription("Get Motorcycle by Id")
                 .Produces<GetMotorcyclesResponse>(StatusCodes.Status200OK)

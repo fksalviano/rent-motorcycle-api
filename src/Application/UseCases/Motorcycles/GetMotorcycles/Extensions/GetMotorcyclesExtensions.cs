@@ -7,10 +7,7 @@ namespace Application.UseCases.Motorcycles.GetMotorcycles.Extensions;
 public static class GetMotorcyclesExtensions
 {
     public static MotorcycleFilter ToFilter(this GetMotorcyclesInput input) =>
-        new (input.Id, input.Plate);
-
-    public static bool IsGetById(this GetMotorcyclesInput input) =>
-        input.Id is not null;
+        new (input.Id, input.Plate);    
 
     public static GetMotorcyclesOutput ToOutput(this IEnumerable<Motorcycle> motorcycles) =>
         new(motorcycles);

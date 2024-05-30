@@ -1,0 +1,54 @@
+###
+//API requests using REST Client extension to execute
+@api = http://localhost:5115/api
+
+###
+# @name getMotorcycles
+
+GET {{api}}/motorcycle
+
+###
+@id={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
+
+# @name getMotorcycleById
+
+GET {{api}}/motorcycle/{{id}}
+
+###
+@plate={{getMotorcycleById.response.body.$.result.motorcycle.plate}}
+
+GET {{api}}/motorcycle
+  ?plate={{plate}}
+
+###
+
+POST {{api}}/motorcycle
+Content-Type: application/json
+
+{
+  "year": 2023,
+  "model": "CG",
+  "plate": "XXX1234"
+}
+
+###
+
+POST {{api}}/motorcycle
+Content-Type: application/json
+
+{
+  "year": 2024,
+  "model": "Titan",
+  "plate": "YYY4567"
+}
+
+###
+
+PUT {{api}}/motorcycle/{{id}}
+Content-Type: application/json
+
+{  
+  "plate": "YYY0000"
+}
+
+###

@@ -35,7 +35,7 @@ public class GetMotorcyclesUseCase : IGetMotorcyclesUseCase
             return;
         }
 
-         if (input.IsGetById())
+         if (input.IsGetById)
             _outputPort.Ok(motorcycles.First().ToOutput());
         else
             _outputPort.Ok(motorcycles.ToOutput());

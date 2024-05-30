@@ -1,6 +1,6 @@
 namespace Infra.Repositories.Filters;
 
-public class MotorcycleFilter
+public struct MotorcycleFilter
 {
     public Guid? Id { get; }
     public string? Plate { get; }

@@ -2,17 +2,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpoints();
 builder.Services.AddUseCases();
+
 builder.Services.AddRepositories();
 builder.Services.AddDatabase(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new()
-    {
-        Title = "Rent-Motorcycle-API",
-        Description = "API to control customers rent"
-        
-    })
-);
+{
+    Title = "Rent-Motorcycle-API",
+    Description = "API to control customers rent"    
+}));
 
 var app = builder.Build();
 

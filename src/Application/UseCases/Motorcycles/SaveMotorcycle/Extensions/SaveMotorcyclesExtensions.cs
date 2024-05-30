@@ -12,5 +12,6 @@ public static class SaveMotorcycleExtensions
         new(motorcycle.Id, motorcycle.Plate);
 
     public static Motorcycle ToMotorcycle(this SaveMotorcycleInput input) =>
-        new(input.Id ?? Guid.NewGuid(), input.Year, input.Model, input.Plate);    
+        new(input.Id ?? Guid.NewGuid(), 
+            input.Year, input.Model, input.Plate);    
 }

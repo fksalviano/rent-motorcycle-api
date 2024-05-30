@@ -8,5 +8,5 @@ public static class RepositoriesInstallerExtensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services) =>
         services
-            .AddSingleton<IMotorcycleRepository, MotorcycleRepository>();
+            .AddScoped<IMotorcycleRepository, MotorcycleRepository>();
 }

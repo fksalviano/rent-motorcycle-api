@@ -1,13 +1,13 @@
 namespace Application.UseCases.Motorcycles.SaveMotorcycle.Ports;
 
-public class SaveMotorcycleInput
+public struct SaveMotorcycleInput
 {
-    public Guid? Id { get; set; }
+    public Guid? Id { get; }
     public int Year { get; }
     public string Model { get; }
     public string Plate { get; }
 
-    public bool IsUpdate => Id is not null;
+    public readonly bool IsUpdate => Id is not null;
 
     public SaveMotorcycleInput(int year, string model, string plate, Guid? id = null)
     {
@@ -20,7 +20,9 @@ public class SaveMotorcycleInput
     public SaveMotorcycleInput(Guid? id, string plate)
     {
         Id = id;
-        Plate = plate;                
+        Plate = plate;
+
+        // fields not used on update
         Year = default;
         Model = string.Empty;
     }
