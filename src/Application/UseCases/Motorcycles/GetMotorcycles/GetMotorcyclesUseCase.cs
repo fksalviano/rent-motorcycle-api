@@ -8,21 +8,22 @@ namespace Application.UseCases.Motorcycles.GetMotorcycles;
 public class GetMotorcyclesUseCase : IGetMotorcyclesUseCase
 {
     private readonly IMotorcycleRepository _repository;
-    private IGetMotorcyclesOutputPort _outputPort = null!;        
+    private IGetMotorcyclesOutputPort _outputPort = null!;
 
     public void SetOutputPort(IGetMotorcyclesOutputPort outputPort)  =>
-        _outputPort = outputPort;    
-    
+        _outputPort = outputPort;
+
     public GetMotorcyclesUseCase(IMotorcycleRepository repository)
     {
         _repository = repository;
     }
 
     public async Task ExecuteAsync(GetMotorcyclesInput input)
-    {        
-        var motorcycles = await _repository.GetMotorcycles(input.Year, input.Model, input.Plate);
+    {
+        var filter = input.ToFilter();
+        var motorcycles = await _repository.GetMotorcycles(filter);
 
-        if (motorcycles == null)
+        if (motorcycles is null)
         {
             _outputPort.Error("Error to Get Motorcycles");
             return;
@@ -34,8 +35,10 @@ public class GetMotorcyclesUseCase : IGetMotorcyclesUseCase
             return;
         }
 
-        var output = motorcycles.ToOutput();
-        _outputPort.Ok(output);
-    }    
-        
+         if (input.IsGetById())
+            _outputPort.Ok(motorcycles.First().ToOutput());
+        else
+            _outputPort.Ok(motorcycles.ToOutput());
+    }
+
 }

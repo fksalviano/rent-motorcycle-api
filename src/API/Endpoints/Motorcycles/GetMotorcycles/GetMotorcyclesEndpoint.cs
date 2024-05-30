@@ -23,9 +23,13 @@ public class GetMotorcyclesEndpoint : IGetMotorcyclesOutputPort
     void IGetMotorcyclesOutputPort.Ok(GetMotorcyclesOutput output) =>
         _result = Results.Ok(GetMotorcyclesResponse.Success(output));
 
+    void IGetMotorcyclesOutputPort.Ok(GetMotorcyclesOutputById output) =>
+        _result = Results.Ok(GetMotorcyclesResponseById.Success(output));
+        
+
     void IGetMotorcyclesOutputPort.NotFound() =>
         _result = Results.NotFound(GetMotorcyclesResponse.Error("Not Found"));
 
     void IGetMotorcyclesOutputPort.Error(string message) =>  
-        _result = Results.Problem(message);
+        _result = Results.Problem(message);    
 }

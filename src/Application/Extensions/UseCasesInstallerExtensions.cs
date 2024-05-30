@@ -1,9 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using Infra.Abstractions;
 using Application.UseCases.Motorcycles.GetMotorcycles;
 using Application.UseCases.Motorcycles.GetMotorcycles.Abstractions;
 using Application.UseCases.Motorcycles.SaveMotorcycle;
 using Application.UseCases.Motorcycles.SaveMotorcycle.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Application.Extensions;
 
@@ -16,5 +18,7 @@ public static class UseCasesInstallerExtensions
                         
             .AddScoped<SaveMotorcycleUseCase>()
             .AddScoped<ISaveMotorcycleUseCase>(provider =>             
-                new SaveMotorcycleUseCaseValidation(provider.GetRequiredService<SaveMotorcycleUseCase>()));
+                new SaveMotorcycleUseCaseValidation(
+                    provider.GetRequiredService<SaveMotorcycleUseCase>(),
+                    provider.GetRequiredService<IMotorcycleRepository>()));
 }

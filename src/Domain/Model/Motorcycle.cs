@@ -7,9 +7,9 @@ public class Motorcycle
     public string Model { get; }
     public string Plate { get; }
 
-    public Motorcycle(int year, string model, string plate)
+    public Motorcycle(Guid id, int year, string model, string plate)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Year = year;
         Model = model;
         Plate = plate;

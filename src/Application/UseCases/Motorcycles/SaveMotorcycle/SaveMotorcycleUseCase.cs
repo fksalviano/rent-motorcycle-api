@@ -19,19 +19,24 @@ public class SaveMotorcycleUseCase : ISaveMotorcycleUseCase
     }
 
     public async Task ExecuteAsync(SaveMotorcycleInput input)
-    {
+    {        
         var motorcycle = input.ToMotorcycle();
-        
-        var motorcycleSaved = await _repository.SaveMotorcycle(motorcycle);
 
-        if (motorcycleSaved == null)
+        var savedMotorcycle = input.IsUpdate switch
+        {
+            true =>  await _repository.UpdateMotorcycle(motorcycle),
+            false => await _repository.CreateMotorcycle(motorcycle)
+        };
+
+        if (savedMotorcycle is null)
         {
             _outputPort.Error("Error to Save Motorcycle");
             return;
-        }
+        }        
 
-        var output = motorcycleSaved.ToOutput();
-        _outputPort.Created(output);
+        if (input.IsUpdate)
+            _outputPort.Updated(savedMotorcycle.ToUpdateOutput());
+        else
+            _outputPort.Created(savedMotorcycle.ToSaveOutput());
     }
-
 }

@@ -13,16 +13,33 @@ public static class EndpointsMapping
     {
         app.MapGroup("Motorcycle", "/api/motorcycle", group =>
         {
-            group.MapGet("/", ([FromServices] GetMotorcyclesEndpoint endpoint, [FromQuery] int? year, string? model, string? plate) => endpoint
-                .GetMotorcycles(new GetMotorcyclesInput(year, model, plate)))
+            group.MapGet("/", ([FromServices] GetMotorcyclesEndpoint endpoint, [FromQuery] string? plate) => endpoint
+                .GetMotorcycles(new GetMotorcyclesInput(plate)))
+
                 .WithDescription("Get Motorcycles filtering by optional params")
                 .Produces<GetMotorcyclesResponse>(StatusCodes.Status200OK)
                 .Produces<ResponseBase<object>>(StatusCodes.Status404NotFound);
 
-            group.MapPost("/", ([FromServices] SaveMotorcycleEndpoint endpoint, [FromBody] SaveMotorcycleInput input) => endpoint
-                .SaveMotorcycle(input))
-                .WithDescription("Saves Motorcycle")
-                .Produces<SaveMotorcycleResponse>(StatusCodes.Status201Created);
+            group.MapGet("/{id}", ([FromServices] GetMotorcyclesEndpoint endpoint, [FromRoute] Guid id) => endpoint
+                .GetMotorcycles(new GetMotorcyclesInput(Id: id)))
+
+                .WithDescription("Get Motorcycle by Id")
+                .Produces<GetMotorcyclesResponse>(StatusCodes.Status200OK)
+                .Produces<ResponseBase<object>>(StatusCodes.Status404NotFound);
+
+            group.MapPost("/", ([FromServices] SaveMotorcycleEndpoint endpoint, [FromBody] SaveMotorcycleRequest request) => endpoint
+                .SaveMotorcycle(new SaveMotorcycleInput(request.Year, request.Model, request.Plate)))
+
+                .WithDescription("Creates a Motorcycle")
+                .Produces<SaveMotorcycleResponse>(StatusCodes.Status201Created)
+                .Produces<ResponseBase<object>>(StatusCodes.Status400BadRequest);
+
+            group.MapPut("/{id}", ([FromServices] SaveMotorcycleEndpoint endpoint, [FromRoute] Guid id, [FromBody] UpdateMotorcycleRequest request) => endpoint
+                .SaveMotorcycle(new SaveMotorcycleInput(id, request.Plate)))
+
+                .WithDescription("Update a Motorcycle")
+                .Produces<UpdateMotorcycleResponse>(StatusCodes.Status202Accepted)
+                .Produces<ResponseBase<object>>(StatusCodes.Status400BadRequest);
         });
     }
 }

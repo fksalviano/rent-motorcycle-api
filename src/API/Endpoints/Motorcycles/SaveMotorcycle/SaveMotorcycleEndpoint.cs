@@ -23,9 +23,13 @@ public class SaveMotorcycleEndpoint : ISaveMotorcycleOutputPort
     void ISaveMotorcycleOutputPort.Created(SaveMotorcycleOutput output) =>
         _result = Results.Created(string.Empty, SaveMotorcycleResponse.Success(output));
 
+    void ISaveMotorcycleOutputPort.Updated(UpdateMotorcycleOutput output) =>
+        _result = Results.Accepted(string.Empty, UpdateMotorcycleResponse.Success(output));
+        
+
     void ISaveMotorcycleOutputPort.Invalid(string message) =>
         _result = Results.BadRequest(SaveMotorcycleResponse.Error(message));
 
     void ISaveMotorcycleOutputPort.Error(string message) =>
-        _result = Results.Problem(message);
+        _result = Results.Problem(message);    
 }
