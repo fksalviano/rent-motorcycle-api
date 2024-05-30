@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using API.Endpoints.Motorcycles.GetMotorcycles;
+using API.Endpoints.Motorcycles.RemoveMotorcycle;
 using API.Endpoints.Motorcycles.SaveMotorcycle;
 
 namespace API.Extensions;
@@ -10,5 +11,6 @@ public static class EndpointsInstallerExtension
     public static IServiceCollection AddEndpoints(this IServiceCollection services) =>
         services
             .AddScoped<GetMotorcyclesEndpoint>()
-            .AddScoped<SaveMotorcycleEndpoint>();
+            .AddScoped<SaveMotorcycleEndpoint>()
+            .AddScoped<RemoveMotorcycleEndpoint>();
 }

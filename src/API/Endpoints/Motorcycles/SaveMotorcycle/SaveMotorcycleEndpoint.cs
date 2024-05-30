@@ -14,8 +14,18 @@ public class SaveMotorcycleEndpoint : ISaveMotorcycleOutputPort
         _useCase.SetOutputPort(this);
     }
 
-    public async Task<IResult> SaveMotorcycle(SaveMotorcycleInput input)
+    public async Task<IResult> SaveMotorcycle(SaveMotorcycleRequest request)
     {
+        var input = new SaveMotorcycleInput(request.Year, request.Model, request.Plate);
+
+        await _useCase.ExecuteAsync(input);        
+        return _result;
+    }
+
+    public async Task<IResult> SaveMotorcycle(Guid id, UpdateMotorcycleRequest request)
+    {
+        var input = new SaveMotorcycleInput(id, request.Plate);
+
         await _useCase.ExecuteAsync(input);
         return _result;
     }
@@ -25,7 +35,10 @@ public class SaveMotorcycleEndpoint : ISaveMotorcycleOutputPort
 
     void ISaveMotorcycleOutputPort.Updated(UpdateMotorcycleOutput output) =>
         _result = Results.Accepted(string.Empty, UpdateMotorcycleResponse.Success(output));
-        
+
+
+    void ISaveMotorcycleOutputPort.NotFound() => 
+        _result = Results.NotFound(SaveMotorcycleResponse.Error("Id not found to update"));
 
     void ISaveMotorcycleOutputPort.Invalid(string message) =>
         _result = Results.BadRequest(SaveMotorcycleResponse.Error(message));

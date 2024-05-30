@@ -1,7 +1,7 @@
 using Application.UseCases.Motorcycles.GetMotorcycles.Abstractions;
 using Application.UseCases.Motorcycles.GetMotorcycles.Extensions;
 using Application.UseCases.Motorcycles.GetMotorcycles.Ports;
-using Infra.Abstractions;
+using Infra.Repositories.Abstractions;
 
 namespace Application.UseCases.Motorcycles.GetMotorcycles;
 
@@ -25,7 +25,7 @@ public class GetMotorcyclesUseCase : IGetMotorcyclesUseCase
 
         if (motorcycles is null)
         {
-            _outputPort.Error("Error to Get Motorcycles");
+            _outputPort.Error("Error to get Motorcycles");
             return;
         }
 

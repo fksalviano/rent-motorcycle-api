@@ -6,6 +6,8 @@ public interface ISaveMotorcycleOutputPort
 {
     void Created(SaveMotorcycleOutput output);
     void Updated(UpdateMotorcycleOutput output);
-    void Invalid(string message);
+    
+    void NotFound();
+    void Invalid(string message);    
     void Error(string message);
 }

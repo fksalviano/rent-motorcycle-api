@@ -52,3 +52,7 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE {{api}}/motorcycle/{{id}}
+
+###

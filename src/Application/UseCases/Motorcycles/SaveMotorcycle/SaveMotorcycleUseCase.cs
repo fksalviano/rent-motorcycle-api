@@ -1,7 +1,7 @@
 using Application.UseCases.Motorcycles.SaveMotorcycle.Abstractions;
 using Application.UseCases.Motorcycles.SaveMotorcycle.Extensions;
 using Application.UseCases.Motorcycles.SaveMotorcycle.Ports;
-using Infra.Abstractions;
+using Infra.Repositories.Abstractions;
 
 namespace Application.UseCases.Motorcycles.SaveMotorcycle;
 
@@ -19,24 +19,30 @@ public class SaveMotorcycleUseCase : ISaveMotorcycleUseCase
     }
 
     public async Task ExecuteAsync(SaveMotorcycleInput input)
-    {        
+    {
         var motorcycle = input.ToMotorcycle();
 
-        var savedMotorcycle = input.IsUpdate switch
+        var savedMotorcycles = input.IsUpdate switch
         {
             true =>  await _repository.UpdateMotorcycle(motorcycle),
             false => await _repository.CreateMotorcycle(motorcycle)
         };
 
-        if (savedMotorcycle is null)
+        if (savedMotorcycles is null)
         {
-            _outputPort.Error("Error to Save Motorcycle");
+            _outputPort.Error("Error to save Motorcycle");
             return;
-        }        
+        }
+
+        if (savedMotorcycles == 0 && input.IsUpdate)
+        {
+            _outputPort.NotFound();
+            return;
+        }
 
         if (input.IsUpdate)
-            _outputPort.Updated(savedMotorcycle.ToUpdateOutput());
+            _outputPort.Updated(motorcycle.ToUpdateOutput());
         else
-            _outputPort.Created(savedMotorcycle.ToSaveOutput());
+            _outputPort.Created(motorcycle.ToSaveOutput());
     }
 }

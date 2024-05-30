@@ -1,5 +1,5 @@
-using Infra.Abstractions;
 using Infra.Repositories;
+using Infra.Repositories.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infra.Extensions;
