@@ -7,6 +7,10 @@ using Application.UseCases.Motorcycles.SaveMotorcycle;
 using Application.UseCases.Motorcycles.SaveMotorcycle.Abstractions;
 using Application.UseCases.Motorcycles.RemoveMotorcycle;
 using Application.UseCases.Motorcycles.RemoveMotorcycle.Abstractions;
+using Application.UseCases.Customers.GetCustomers.Abstractions;
+using Application.UseCases.Customers.GetCustomers;
+using Application.UseCases.Customers.SaveCustomer;
+using Application.UseCases.Customers.SaveCustomer.Abstractions;
 
 
 namespace Application.Extensions;
@@ -16,17 +20,21 @@ public static class UseCasesInstallerExtensions
 {
     public static IServiceCollection AddUseCases(this IServiceCollection services) =>
         services
+            // Motorcycles
             .AddScoped<IGetMotorcyclesUseCase, GetMotorcyclesUseCase>()
 
             .AddScoped<SaveMotorcycleUseCase>()
-            .AddScoped<ISaveMotorcycleUseCase>(provider =>
-                new SaveMotorcycleUseCaseValidation(
-                    provider.GetRequiredService<SaveMotorcycleUseCase>(),
-                    provider.GetRequiredService<IMotorcycleRepository>()))
+            .AddScoped<ISaveMotorcycleUseCase>(provider => new SaveMotorcycleUseCaseValidation(
+                    provider.GetRequiredService<SaveMotorcycleUseCase>(), provider.GetRequiredService<IMotorcycleRepository>()))                    
                     
             .AddScoped<RemoveMotorcycleUseCase>()
-            .AddScoped<IRemoveMotorcycleUseCase>(provider =>
-                new RemoveMotorcycleUseCaseValidation(
-                    provider.GetRequiredService<RemoveMotorcycleUseCase>(),
-                    provider.GetRequiredService<IMotorcycleRepository>()));
+            .AddScoped<IRemoveMotorcycleUseCase>(provider => new RemoveMotorcycleUseCaseValidation(
+                    provider.GetRequiredService<RemoveMotorcycleUseCase>(), provider.GetRequiredService<IMotorcycleRepository>()))
+
+            // Customers
+            .AddScoped<IGetCustomersUseCase, GetCustomersUseCase>()
+            
+            .AddScoped<SaveCustomerUseCase>()
+            .AddScoped<ISaveCustomerUseCase>(provider => new SaveCustomerUseCaseValidation(
+                    provider.GetRequiredService<SaveCustomerUseCase>(), provider.GetRequiredService<ICustomerRepository>()));
 }

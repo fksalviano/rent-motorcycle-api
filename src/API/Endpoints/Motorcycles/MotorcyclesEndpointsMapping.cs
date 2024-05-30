@@ -11,8 +11,8 @@ namespace API.Endpoints.Motorcycles;
 [ExcludeFromCodeCoverage]
 public static class MotorcyclesEndpointsMapping
 {
-    public static void MapMotorcyclesEndpoints (this IEndpointRouteBuilder app)
-    {
+    public static IEndpointRouteBuilder MapMotorcyclesEndpoints (this IEndpointRouteBuilder app) =>
+    
         app.MapGroup("Motorcycle", "/api/motorcycle", group =>
         {
             group.MapGet("/", ([FromServices] GetMotorcyclesEndpoint endpoint, [FromQuery][Optional] string? plate) => endpoint
@@ -24,7 +24,7 @@ public static class MotorcyclesEndpointsMapping
             group.MapGet("/{id}", ([FromServices] GetMotorcyclesEndpoint endpoint, [FromRoute] Guid id) => endpoint
                 .GetMotorcycleById(id))
                     .WithDescription("Get Motorcycle by Id")
-                    .Produces<GetMotorcyclesResponse>(StatusCodes.Status200OK)
+                    .Produces<GetMotorcyclesResponseByid>(StatusCodes.Status200OK)
                     .Produces<ResponseBase<object>>(StatusCodes.Status404NotFound);
 
             group.MapPost("/", ([FromServices] SaveMotorcycleEndpoint endpoint, [FromBody] SaveMotorcycleRequest request) => endpoint
@@ -34,7 +34,7 @@ public static class MotorcyclesEndpointsMapping
                     .Produces<ResponseBase<object>>(StatusCodes.Status400BadRequest);
 
             group.MapPut("/{id}", ([FromServices] SaveMotorcycleEndpoint endpoint, [FromRoute] Guid id, [FromBody] UpdateMotorcycleRequest request) => endpoint
-                .SaveMotorcycle(id, request))
+                .UpdateMotorcycle(id, request))
                     .WithDescription("Update a Motorcycle")
                     .Produces<UpdateMotorcycleResponse>(StatusCodes.Status202Accepted)
                     .Produces<UpdateMotorcycleResponse>(StatusCodes.Status404NotFound)
@@ -46,6 +46,5 @@ public static class MotorcyclesEndpointsMapping
                     .Produces<UpdateMotorcycleResponse>(StatusCodes.Status204NoContent)
                     .Produces<UpdateMotorcycleResponse>(StatusCodes.Status404NotFound)
                     .Produces<ResponseBase<object>>(StatusCodes.Status400BadRequest);
-        });
-    }    
+        });    
 }

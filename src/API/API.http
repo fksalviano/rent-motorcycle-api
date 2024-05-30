@@ -5,14 +5,14 @@
 ###
 # @name getMotorcycles
 
-GET {{api}}/motorcycle
+GET {{api}}/motorcycle  
 
 ###
-@id={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
+@motoId={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
 
 # @name getMotorcycleById
 
-GET {{api}}/motorcycle/{{id}}
+GET {{api}}/motorcycle/{{motoId}}
 
 ###
 @plate={{getMotorcycleById.response.body.$.result.motorcycle.plate}}
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ###
 
-PUT {{api}}/motorcycle/{{id}}
+PUT {{api}}/motorcycle/{{motoId}}
 Content-Type: application/json
 
 {  
@@ -53,6 +53,46 @@ Content-Type: application/json
 
 ###
 
-DELETE {{api}}/motorcycle/{{id}}
+DELETE {{api}}/motorcycle/{{motoId}}
+
+###
+# @name getCustomers
+
+GET {{api}}/customer
+  # ?driverLicenseNumber=99999999
+  # ?taxId=111111111111
+
+###
+# @name getCustomersById
+@customId={{getCustomers.response.body.$.result.customers[0].id}}
+
+GET {{api}}/customer/{{customId}}
+
+###
+
+POST {{api}}/customer
+Content-Type: application/json
+
+{
+  "name" : "Tste",
+  "taxId" : "111111111111",
+  "bornDate" : "2024-05-30T22:26:09.401Z",
+  "driverLicenseNumber" : 888888888,
+  "driverLicenseType" : "A"
+}
+
+###
+@customId={{getCustomersById.response.body.$.result.customer.id}}
+
+PUT {{api}}/customer/{{customId}}
+Content-Type: application/json
+
+{      
+  "name": "Tste",
+  "taxId": "0000000000",
+  "bornDate": "2024-05-30T00:00:00",
+  "driverLicenseNumber": 99999999,
+  "driverLicenseType": "B"
+}
 
 ###

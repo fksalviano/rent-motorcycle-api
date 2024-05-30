@@ -22,7 +22,7 @@ public class SaveMotorcycleEndpoint : ISaveMotorcycleOutputPort
         return _result;
     }
 
-    public async Task<IResult> SaveMotorcycle(Guid id, UpdateMotorcycleRequest request)
+    public async Task<IResult> UpdateMotorcycle(Guid id, UpdateMotorcycleRequest request)
     {
         var input = new SaveMotorcycleInput(id, request.Plate);
 
