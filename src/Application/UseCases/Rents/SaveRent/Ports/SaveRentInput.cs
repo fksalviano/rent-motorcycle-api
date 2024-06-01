@@ -1,3 +1,5 @@
+using Domain.Model;
+
 namespace Application.UseCases.Rents.SaveRent.Ports;
 
 public struct SaveRentInput
@@ -8,7 +10,6 @@ public struct SaveRentInput
     public int RentDays { get; }    
     public DateTime StartDate { get; }    
     public DateTime? EndDate { get; } = null;
-    public decimal? EndValue { get; } = null;
 
     public readonly bool IsUpdate => Id is not null;    
 
@@ -20,10 +21,9 @@ public struct SaveRentInput
         StartDate = startDate;        
     }
 
-    public SaveRentInput(Guid? id, DateTime endDate, decimal endValue)
+    public SaveRentInput(Guid? id, DateTime endDate)
     {
         Id = id;
-        EndDate = endDate;
-        EndValue = endValue;
-    }
+        EndDate = endDate;        
+    }    
 }

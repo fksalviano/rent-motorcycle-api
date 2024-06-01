@@ -40,8 +40,7 @@ public class SaveRentUseCaseValidation : AbstractValidator<SaveRentInput>, ISave
 
         When(input => input.IsUpdate, () =>
         {
-            RuleFor(input => input.EndDate).NotEmpty().WithMessage("EndDate is invalid");
-            RuleFor(input => input.EndValue).NotEmpty().WithMessage("EndValue is invalid");
+            RuleFor(input => input.EndDate).NotEmpty().WithMessage("EndDate is invalid");            
         });
     }
 
@@ -73,13 +72,13 @@ public class SaveRentUseCaseValidation : AbstractValidator<SaveRentInput>, ISave
                 return;
             }
 
-            if (!ValidLicensesToRent.Contains(customer.Value.DriverLicenseType))
+            if (!ValidLicensesToRent.Contains(customer.DriverLicenseType))
             {
                 _outputPort.Invalid($"Customer DriverLicense type should be {string.Join(", ", ValidLicensesToRent)}");
                 return;
             }            
 
-            var customerRents = await _rentRepository.GetRents(new(customerId: customer.Value.Id));
+            var customerRents = await _rentRepository.GetRents(new(customerId: customer.Id));
             if (customerRents!.Any(rent => rent.EndDate is null))
             {
                 _outputPort.Invalid("Customer already has an active Rent");

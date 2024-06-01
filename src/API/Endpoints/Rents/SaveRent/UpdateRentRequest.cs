@@ -5,13 +5,11 @@ namespace API.Endpoints.Rents.SaveRent;
 public class UpdateRentRequest
 {
     public DateTime EndDate { get; }
-    public decimal Endvalue { get; }
 
-    public UpdateRentRequest(DateTime endDate, decimal endvalue)
+    public UpdateRentRequest(DateTime endDate)
     {
-        EndDate = endDate;
-        Endvalue = endvalue;
+        EndDate = endDate;        
     }   
 
-    public SaveRentInput ToInput(Guid id) => new(id, EndDate, Endvalue);
+    public SaveRentInput ToInput(Guid id) => new(id, EndDate);
 }

@@ -9,11 +9,11 @@
 GET {{api}}/motorcycle
 
 ###
-@motoId={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
+@motorcycleId={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
 
 # @name getMotorcycleById
 
-GET {{api}}/motorcycle/{{motoId}}
+GET {{api}}/motorcycle/{{motorcycleId}}
 
 ###
 @plate={{getMotorcycleById.response.body.$.result.motorcycle.plate}}
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 ###
 
-PUT {{api}}/motorcycle/{{motoId}}
+PUT {{api}}/motorcycle/{{motorcycleId}}
 Content-Type: application/json
 
 {  
@@ -54,7 +54,7 @@ Content-Type: application/json
 
 ###
 
-DELETE {{api}}/motorcycle/{{motoId}}
+DELETE {{api}}/motorcycle/{{motorcycleId}}
 
 ###
 # @name getCustomers
@@ -65,9 +65,9 @@ GET {{api}}/customer
 
 ###
 # @name getCustomersById
-@customId={{getCustomers.response.body.$.result.customers[0].id}}
+@customerId={{getCustomers.response.body.$.result.customers[0].id}}
 
-GET {{api}}/customer/{{customId}}
+GET {{api}}/customer/{{customerId}}
 
 ###
 
@@ -84,7 +84,7 @@ Content-Type: application/json
 
 ###
 
-PUT {{api}}/customer/{{customId}}
+PUT {{api}}/customer/{{customerId}}
 Content-Type: application/json
 
 {      
@@ -101,13 +101,14 @@ Content-Type: application/json
 
 GET {{api}}/rent
 
-@rentId={{getRents.response.body.$.result.rents[0].id}}
+@rentId={{getRents.response.body.$.result.rents[2].id}}
 
 ###
 
 # @name getRentById
 
 GET {{api}}/rent/{{rentId}}
+  # ?endDatePreview=2024-06-07T22:35:07.846Z
 
 ###
 
@@ -115,12 +116,10 @@ POST {{api}}/rent
 Content-Type: application/json
 
 {
-  "customerId": "{{customId}}",
-  "motorcycleId": "{{motoId}}",
-  "rentDays": 5,
-  "rentValue": 50.00,
-  "startDate": "2024-05-31T22:35:11.833Z",
-  "expectedEnd": "2024-06-04T22:35:11.833Z"
+  "customerId": "{{customerId}}",
+  "motorcycleId": "{{motorcycleId}}",
+  "rentDays": 7,  
+  "startDate": "2024-05-31T22:35:11.833Z"
 }
 
 ###
@@ -129,8 +128,7 @@ PUT {{api}}/rent/{{rentId}}
 Content-Type: application/json
 
 {
-  "endDate": "2024-06-10T22:35:11.846Z",
-  "endvalue": 200.00
+  "endDate": "2024-06-03T22:35:11.846Z"
 }
 
 ###

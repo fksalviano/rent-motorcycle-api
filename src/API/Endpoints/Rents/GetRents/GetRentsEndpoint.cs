@@ -22,9 +22,9 @@ public class GetRentsEndpoint : IGetRentsOutputPort
         return _result;
     }
 
-    public async Task<IResult> GetRentById(Guid id)
+    public async Task<IResult> GetRentById(Guid id, DateTime? endDatePreview)
     {
-        var input = new GetRentsInput(id);
+        var input = new GetRentsInput(id, endDatePreview);
 
         await _useCase.ExecuteAsync(input);
         return _result;

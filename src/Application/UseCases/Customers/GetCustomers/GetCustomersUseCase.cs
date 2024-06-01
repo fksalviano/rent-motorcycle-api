@@ -21,24 +21,24 @@ public class GetCustomersUseCase : IGetCustomersUseCase
     public async Task ExecuteAsync(GetCustomersInput input)
     {
         var filter = input.ToFilter();
-        var Customers = await _repository.GetCustomers(filter);
+        var customers = await _repository.GetCustomers(filter);
 
-        if (Customers is null)
+        if (customers is null)
         {
             _outputPort.Error("Error to get Customers");
             return;
         }
 
-        if (!Customers.Any())
+        if (!customers.Any())
         {
             _outputPort.NotFound();
             return;
         }
 
          if (input.IsGetById)
-            _outputPort.Ok(Customers.First().ToOutput());
+            _outputPort.Ok(customers.First().ToOutput());
         else
-            _outputPort.Ok(Customers.ToOutput());
+            _outputPort.Ok(customers.ToOutput());
     }
 
 }

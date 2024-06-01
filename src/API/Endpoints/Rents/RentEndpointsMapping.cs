@@ -4,6 +4,7 @@ using Domain.Base;
 using API.Endpoints.Rents.GetRents;
 using API.Endpoints.Rents.SaveRent;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using System.Runtime.InteropServices;
 
 namespace API.Endpoints.Rents;
 
@@ -20,8 +21,8 @@ public static class RentEndpointsMapping
                     .Produces<GetRentsResponse>(Status200OK)
                     .Produces<ResponseBase<object>>(Status404NotFound);
 
-            group.MapGet("/{id}", ([FromServices] GetRentsEndpoint endpoint, [FromRoute] Guid id) => endpoint
-                .GetRentById(id))
+            group.MapGet("/{id}", ([FromServices] GetRentsEndpoint endpoint, [FromRoute] Guid id, [FromQuery][Optional] DateTime? endDatePreview) => endpoint
+                .GetRentById(id, endDatePreview))
                     .WithDescription("Get Rent by Id")
                     .Produces<GetRentsResponseById>(Status200OK)
                     .Produces<ResponseBase<object>>(Status404NotFound);
