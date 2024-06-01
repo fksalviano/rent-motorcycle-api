@@ -36,17 +36,16 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public async Task<Customer?> GetCustomer(Guid id) =>
-        (await GetCustomers(new CustomerFilter(id: id)))?.FirstOrDefault();
+    public async Task<Customer?> GetCustomer(Guid id) => (await GetCustomers(new CustomerFilter(id)))?.FirstOrDefault();
 
-    public async Task<int?> CreateCustomer(Customer Customer)
+    public async Task<int?> CreateCustomer(Customer customer)
     {
         const string sql =
-            @"insert into Customer(Id, Name, TaxId, BornDate, DriverLicenseNumber, DriverLicenseType)
+            @"insert into Customer (Id, Name, TaxId, BornDate, DriverLicenseNumber, DriverLicenseType)
             values (@Id, @Name, @TaxId, @BornDate, @DriverLicenseNumber, @DriverLicenseType)";
         try
         {
-            return await _connection.ExecuteAsync(sql, Customer);
+            return await _connection.ExecuteAsync(sql, customer);
         }
         catch (Exception ex)
         {
@@ -55,7 +54,7 @@ public class CustomerRepository : ICustomerRepository
         }
     }
 
-    public async Task<int?> UpdateCustomer(Customer Customer)
+    public async Task<int?> UpdateCustomer(Customer customer)
     {
         const string sql =
             @"update Customer 
@@ -64,7 +63,7 @@ public class CustomerRepository : ICustomerRepository
             where Id = @Id";
         try
         {
-            return await _connection.ExecuteAsync(sql, Customer);
+            return await _connection.ExecuteAsync(sql, customer);
         }
         catch (Exception ex)
         {

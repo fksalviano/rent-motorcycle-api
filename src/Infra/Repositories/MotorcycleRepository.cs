@@ -10,7 +10,7 @@ namespace Infra.Repositories;
 public class MotorcycleRepository : IMotorcycleRepository
 {
     private readonly IDbConnection _connection;
-        private readonly ILogger<MotorcycleRepository> _logger;
+    private readonly ILogger<MotorcycleRepository> _logger;
 
     public MotorcycleRepository(IDbConnection connection, ILogger<MotorcycleRepository> logger)
     {
@@ -35,13 +35,12 @@ public class MotorcycleRepository : IMotorcycleRepository
         }
     }
 
-    public async Task<Motorcycle?> GetMotorcycle(Guid id) =>
-        (await GetMotorcycles(new MotorcycleFilter(id: id)))?.FirstOrDefault();
+    public async Task<Motorcycle?> GetMotorcycle(Guid id) => (await GetMotorcycles(new MotorcycleFilter(id)))?.FirstOrDefault();
 
     public async Task<int?> CreateMotorcycle(Motorcycle motorcycle)
     {
         const string sql =
-            @"insert into Motorcycle(Id, Year, Model, Plate)
+            @"insert into Motorcycle (Id, Year, Model, Plate)
             values (@Id, @Year, @Model, @Plate)";
         try
         {

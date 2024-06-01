@@ -7,7 +7,7 @@ public interface ICustomerRepository
 {
     Task<IEnumerable<Customer>?> GetCustomers(CustomerFilter? filter = null);
     Task<Customer?> GetCustomer(Guid id);
-    Task<int?> CreateCustomer(Customer Customer);
-    Task<int?> UpdateCustomer(Customer Customer);
+    Task<int?> CreateCustomer(Customer customer);
+    Task<int?> UpdateCustomer(Customer customer);
     Task<int?> DeleteCustomer(Guid id);
 }

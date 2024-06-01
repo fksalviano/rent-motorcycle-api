@@ -1,6 +1,6 @@
 namespace Domain.Model;
 
-public class Customer
+public struct Customer
 {    
     public Guid Id { get; }
     public string Name { get; }

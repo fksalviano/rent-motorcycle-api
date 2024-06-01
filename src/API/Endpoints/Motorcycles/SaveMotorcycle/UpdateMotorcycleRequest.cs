@@ -1,3 +1,5 @@
+using Application.UseCases.Motorcycles.SaveMotorcycle.Ports;
+
 namespace API.Endpoints.Motorcycles.SaveMotorcycle;
 
 public class UpdateMotorcycleRequest
@@ -8,4 +10,7 @@ public class UpdateMotorcycleRequest
     {     
         Plate = plate;
     }
+
+    public SaveMotorcycleInput ToInput(Guid id) =>
+        new(id, Plate);
 }

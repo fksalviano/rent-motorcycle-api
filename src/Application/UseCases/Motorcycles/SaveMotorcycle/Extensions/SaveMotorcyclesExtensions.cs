@@ -11,7 +11,11 @@ public static class SaveMotorcycleExtensions
     public static UpdateMotorcycleOutput ToUpdateOutput(this Motorcycle motorcycle) =>
         new(motorcycle.Id, motorcycle.Plate);
 
-    public static Motorcycle ToMotorcycle(this SaveMotorcycleInput input) =>
-        new(input.Id ?? Guid.NewGuid(), 
-            input.Year, input.Model, input.Plate);    
+    public static Motorcycle ToMotorcycle(this SaveMotorcycleInput input) => new
+    (
+        input.Id ?? Guid.NewGuid(),
+        input.Year,
+        input.Model,
+        input.Plate
+    );
 }

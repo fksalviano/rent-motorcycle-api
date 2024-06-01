@@ -11,6 +11,10 @@ using Application.UseCases.Customers.GetCustomers.Abstractions;
 using Application.UseCases.Customers.GetCustomers;
 using Application.UseCases.Customers.SaveCustomer;
 using Application.UseCases.Customers.SaveCustomer.Abstractions;
+using Application.UseCases.Rents.GetRents.Abstractions;
+using Application.UseCases.Rents.GetRents;
+using Application.UseCases.Rents.SaveRent;
+using Application.UseCases.Rents.SaveRent.Abstractions;
 
 
 namespace Application.Extensions;
@@ -36,5 +40,13 @@ public static class UseCasesInstallerExtensions
             
             .AddScoped<SaveCustomerUseCase>()
             .AddScoped<ISaveCustomerUseCase>(provider => new SaveCustomerUseCaseValidation(
-                    provider.GetRequiredService<SaveCustomerUseCase>(), provider.GetRequiredService<ICustomerRepository>()));
+                    provider.GetRequiredService<SaveCustomerUseCase>(), provider.GetRequiredService<ICustomerRepository>()))
+
+             // Rents
+            .AddScoped<IGetRentsUseCase, GetRentsUseCase>()
+            
+            .AddScoped<SaveRentUseCase>()
+            .AddScoped<ISaveRentUseCase>(provider => new SaveRentUseCaseValidation(
+                    provider.GetRequiredService<SaveRentUseCase>(), provider.GetRequiredService<IRentRepository>(),
+                    provider.GetRequiredService<ICustomerRepository>(), provider.GetRequiredService<IMotorcycleRepository>()));
 }

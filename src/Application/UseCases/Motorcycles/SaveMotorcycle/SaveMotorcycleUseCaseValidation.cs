@@ -22,10 +22,11 @@ public class SaveMotorcycleUseCaseValidation : AbstractValidator<SaveMotorcycleI
         _useCase = useCase;
         _repository = repository;
 
-        RuleFor(input => input.Year).NotEmpty().WithMessage("Year is inalid").When(input => !input.IsUpdate);
-
-        RuleFor(input => input.Model).NotEmpty().WithMessage("Model is empty").When(input => !input.IsUpdate);
-
+        When(input => !input.IsUpdate, () =>
+        {
+            RuleFor(input => input.Year).NotEmpty().WithMessage("Year is inalid");
+            RuleFor(input => input.Model).NotEmpty().WithMessage("Model is empty");
+        });        
         RuleFor(input => input.Plate).NotEmpty().WithMessage("Plate is empty");
     }
 

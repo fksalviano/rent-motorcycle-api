@@ -1,6 +1,6 @@
 namespace Domain.Model;
 
-public class Motorcycle
+public struct Motorcycle
 {
     public Guid Id { get; }
     public int Year { get; }

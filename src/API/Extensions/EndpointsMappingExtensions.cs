@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using API.Endpoints.Motorcycles;
 using API.Endpoints.Customers;
+using API.Endpoints.Rents;
 
 namespace API.Extensions;
 
@@ -9,6 +10,7 @@ public static class EndpointsMappingExtensions
 {
     public static void MapEndpoints (this IEndpointRouteBuilder app) =>
         app
-            .MapMotorcyclesEndpoints()
-            .MapCustomersEndpoints();
+            .MapMotorcycleEndpoints()
+            .MapCustomerEndpoints()
+            .MapRentEndpoints();
 }

@@ -1,11 +1,12 @@
 ###
 //API requests using REST Client extension to execute
-@api = http://localhost:5115/api
+# @api = http://localhost:5115/api
+@api = https://localhost:7036/api
 
 ###
 # @name getMotorcycles
 
-GET {{api}}/motorcycle  
+GET {{api}}/motorcycle
 
 ###
 @motoId={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
@@ -82,7 +83,6 @@ Content-Type: application/json
 }
 
 ###
-@customId={{getCustomersById.response.body.$.result.customer.id}}
 
 PUT {{api}}/customer/{{customId}}
 Content-Type: application/json
@@ -93,6 +93,44 @@ Content-Type: application/json
   "bornDate": "2024-05-30T00:00:00",
   "driverLicenseNumber": 99999999,
   "driverLicenseType": "B"
+}
+
+###
+
+# @name getRents
+
+GET {{api}}/rent
+
+@rentId={{getRents.response.body.$.result.rents[0].id}}
+
+###
+
+# @name getRentById
+
+GET {{api}}/rent/{{rentId}}
+
+###
+
+POST {{api}}/rent
+Content-Type: application/json
+
+{
+  "customerId": "{{customId}}",
+  "motorcycleId": "{{motoId}}",
+  "rentDays": 5,
+  "rentValue": 50.00,
+  "startDate": "2024-05-31T22:35:11.833Z",
+  "expectedEnd": "2024-06-04T22:35:11.833Z"
+}
+
+###
+
+PUT {{api}}/rent/{{rentId}}
+Content-Type: application/json
+
+{
+  "endDate": "2024-06-10T22:35:11.846Z",
+  "endvalue": 200.00
 }
 
 ###

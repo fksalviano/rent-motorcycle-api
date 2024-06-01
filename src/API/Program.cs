@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpoints();
 builder.Services.AddUseCases();
+builder.Services.AddConfigurations(builder.Configuration);
 
 builder.Services.AddRepositories();
 builder.Services.AddDatabase(builder.Configuration);
@@ -26,4 +29,3 @@ app.UseHttpsRedirection();
 app.MapEndpoints();
 
 app.Run();
-

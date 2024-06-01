@@ -24,14 +24,10 @@ public class SaveCustomerUseCaseValidation : AbstractValidator<SaveCustomerInput
         _repository = repository;
 
         RuleFor(input => input.Name).NotEmpty().WithMessage("Name is empty");
-
         RuleFor(input => input.TaxId).NotEmpty().WithMessage("TaxId is empty");
-
         RuleFor(input => input.BornDate).NotEmpty().WithMessage("BornDate is invalid");
-
         RuleFor(input => input.DriverLicenseNumber).NotEmpty().WithMessage("DriverLicenseNumber is invalid");
-
-        RuleFor(input => input.DriverLicenseType).NotEmpty().WithMessage("DriverLicenseType is empty");        
+        RuleFor(input => input.DriverLicenseType).NotNull().WithMessage("DriverLicenseType is empty");        
     }
 
     public async Task ExecuteAsync(SaveCustomerInput input)
@@ -45,9 +41,8 @@ public class SaveCustomerUseCaseValidation : AbstractValidator<SaveCustomerInput
             _outputPort.Invalid(messages);
             return;
         }
-
-        var filter = new CustomerFilter(input.TaxId);
-        var existentsByTaxId = await _repository.GetCustomers(filter);
+        
+        var existentsByTaxId = await _repository.GetCustomers(new(input.TaxId));
 
         if (existentsByTaxId is null)
         {
@@ -60,9 +55,8 @@ public class SaveCustomerUseCaseValidation : AbstractValidator<SaveCustomerInput
             _outputPort.Invalid("Customer already exists with this TaxId");
             return;
         }
-
-        filter = new CustomerFilter(input.DriverLicenseNumber);
-        var existentsByLicense = await _repository.GetCustomers(filter);
+        
+        var existentsByLicense = await _repository.GetCustomers(new(input.DriverLicenseNumber));
 
         if (existentsByLicense!.Where(existent => existent.Id != input.Id).Any())
         {

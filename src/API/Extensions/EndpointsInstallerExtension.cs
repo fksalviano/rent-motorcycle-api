@@ -4,6 +4,8 @@ using API.Endpoints.Customers.SaveCustomer;
 using API.Endpoints.Motorcycles.GetMotorcycles;
 using API.Endpoints.Motorcycles.RemoveMotorcycle;
 using API.Endpoints.Motorcycles.SaveMotorcycle;
+using API.Endpoints.Rents.GetRents;
+using API.Endpoints.Rents.SaveRent;
 
 namespace API.Extensions;
 
@@ -16,7 +18,14 @@ public static class EndpointsInstallerExtension
             .AddScoped<GetMotorcyclesEndpoint>()
             .AddScoped<SaveMotorcycleEndpoint>()
             .AddScoped<RemoveMotorcycleEndpoint>()
+
             // Customers
             .AddScoped<GetCustomersEndpoint>()
-            .AddScoped<SaveCustomerEndpoint>();
+            .AddScoped<SaveCustomerEndpoint>()
+
+            // Rents
+            .AddScoped<GetRentsEndpoint>()
+            .AddScoped<SaveRentEndpoint>()
+
+            .ConfigureSerializer();
 }

@@ -19,7 +19,6 @@ public class RemoveMotorcycleEndpoint : IRemoveMotorcycleOutputPort
         var input = new RemoveMotorcycleInput(id);
 
         await _useCase.ExecuteAsync(input);
-
         return _result;
     }
 
