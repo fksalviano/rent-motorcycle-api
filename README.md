@@ -163,6 +163,7 @@ Class diagram with application domain entities and his relationships.
 
 ```mermaid
 classDiagram
+direction LR
     Customer <-- Rent
     Rent --> Motorcycle
 ````
