@@ -17,25 +17,25 @@ public static class RentEndpointsMapping
         {
             group.MapGet("/", ([FromServices] GetRentsEndpoint endpoint, [FromQuery] Guid? customerId) => endpoint
                 .GetRents(customerId))
-                    .WithDescription("Get Rents")
+                    .WithSummary("Get Rents")
                     .Produces<GetRentsResponse>(Status200OK)
                     .Produces<ResponseBase<object>>(Status404NotFound);
 
             group.MapGet("/{id}", ([FromServices] GetRentsEndpoint endpoint, [FromRoute] Guid id, [FromQuery][Optional] DateTime? endDatePreview) => endpoint
                 .GetRentById(id, endDatePreview))
-                    .WithDescription("Get Rent by Id")
+                    .WithSummary("Get Rent by Id and optionally End Date to preview End Value")
                     .Produces<GetRentsResponseById>(Status200OK)
                     .Produces<ResponseBase<object>>(Status404NotFound);
 
             group.MapPost("/", ([FromServices] SaveRentEndpoint endpoint, [FromBody] SaveRentRequest request) => endpoint
                 .SaveRent(request))
-                    .WithDescription("Creates a Rent")
+                    .WithSummary("Create a Rent for a Customer to a Motorcycle")
                     .Produces<SaveRentResponse>(Status201Created)
                     .Produces<ResponseBase<object>>(Status400BadRequest);
 
             group.MapPut("/{id}", ([FromServices] SaveRentEndpoint endpoint, [FromRoute] Guid id, [FromBody] UpdateRentRequest request) => endpoint
                 .UpdateRent(id, request))
-                    .WithDescription("Update a Rent")
+                    .WithSummary("Update a Rent End Date and calculate the End Value")
                     .Produces<UpdateRentResponse>(Status202Accepted)
                     .Produces<UpdateRentResponse>(Status404NotFound)
                     .Produces<ResponseBase<object>>(Status400BadRequest);

@@ -10,6 +10,11 @@ CREATE TABLE Motorcycle
     Plate VARCHAR(10) NOT NULL UNIQUE
 );
 
+CREATE TABLE MotorcycleNotify
+(
+    MotorcycleId UUID NOT NULL PRIMARY KEY    
+);
+
 CREATE TABLE Customer
 (
     Id UUID NOT NULL PRIMARY KEY,

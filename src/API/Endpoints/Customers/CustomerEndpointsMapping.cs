@@ -17,25 +17,25 @@ public static class CustomerEndpointsMapping
         {
             group.MapGet("/", ([FromServices] GetCustomersEndpoint endpoint, [FromQuery][Optional] string? taxId, int? driverLicenseNumber) => endpoint
                 .GetCustomers(taxId, driverLicenseNumber))
-                    .WithDescription("Get Customers filtering by optional params")
+                    .WithSummary("Get Customers filtering by optional params")                    
                     .Produces<GetCustomersResponse>(Status200OK)
                     .Produces<ResponseBase<object>>(Status404NotFound);
 
             group.MapGet("/{id}", ([FromServices] GetCustomersEndpoint endpoint, [FromRoute] Guid id) => endpoint
                 .GetCustomerById(id))
-                    .WithDescription("Get Customer by Id")
+                    .WithSummary("Get Customer by Id")
                     .Produces<GetCustomersResponseById>(Status200OK)
                     .Produces<ResponseBase<object>>(Status404NotFound);
 
             group.MapPost("/", ([FromServices] SaveCustomerEndpoint endpoint, [FromBody] SaveCustomerRequest request) => endpoint
                 .SaveCustomer(request))
-                    .WithDescription("Creates a Customer")
+                    .WithSummary("Create a Customer")
                     .Produces<SaveCustomerResponse>(Status201Created)
                     .Produces<ResponseBase<object>>(Status400BadRequest);
 
             group.MapPut("/{id}", ([FromServices] SaveCustomerEndpoint endpoint, [FromRoute] Guid id, [FromBody] SaveCustomerRequest request) => endpoint
                 .SaveCustomer(request, id))
-                    .WithDescription("Update a Customer")
+                    .WithSummary("Update a Customer")
                     .Produces<SaveCustomerResponse>(Status202Accepted)
                     .Produces<SaveCustomerResponse>(Status404NotFound)
                     .Produces<ResponseBase<object>>(Status400BadRequest);

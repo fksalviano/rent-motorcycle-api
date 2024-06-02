@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpoints();
 builder.Services.AddUseCases();
+
 builder.Services.AddConfigurations(builder.Configuration);
 
 builder.Services.AddRepositories();
@@ -18,11 +18,8 @@ builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new()
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

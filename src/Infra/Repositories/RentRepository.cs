@@ -23,7 +23,8 @@ public class RentRepository : IRentRepository
         const string sql =
             @"select Id, CustomerId, MotorcycleId, RentDays, RentValue, StartDate, ExpectedEnd, EndDate, EndValue
             from Rent where (Id = @Id or @Id is null)
-            and (CustomerId = @CustomerId or @CustomerId is null)";
+            and (CustomerId = @CustomerId or @CustomerId is null)
+            and (MotorcycleId = @MotorcycleId or @MotorcycleId is null)";
         try
         {
             return await _connection.QueryAsync<Rent>(sql, filter);

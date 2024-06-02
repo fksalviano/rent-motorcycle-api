@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Domain.Configuration;
 
-namespace API.Extensions;
+namespace Application.Extensions;
 
 [ExcludeFromCodeCoverage]
 public static class ConfigurationInstallerExtensions

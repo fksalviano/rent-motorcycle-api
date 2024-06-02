@@ -33,7 +33,7 @@ public static class UseCasesInstallerExtensions
                     
             .AddScoped<RemoveMotorcycleUseCase>()
             .AddScoped<IRemoveMotorcycleUseCase>(provider => new RemoveMotorcycleUseCaseValidation(
-                    provider.GetRequiredService<RemoveMotorcycleUseCase>(), provider.GetRequiredService<IMotorcycleRepository>()))
+                    provider.GetRequiredService<RemoveMotorcycleUseCase>(), provider.GetRequiredService<IRentRepository>()))
 
             // Customers
             .AddScoped<IGetCustomersUseCase, GetCustomersUseCase>()

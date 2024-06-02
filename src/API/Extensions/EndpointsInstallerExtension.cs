@@ -12,7 +12,7 @@ namespace API.Extensions;
 [ExcludeFromCodeCoverage]
 public static class EndpointsInstallerExtension
 {
-    public static IServiceCollection AddEndpoints(this IServiceCollection services) =>
+    public static IServiceCollection  AddEndpoints(this IServiceCollection services) =>
         services
             // Motorcycles
             .AddScoped<GetMotorcyclesEndpoint>()

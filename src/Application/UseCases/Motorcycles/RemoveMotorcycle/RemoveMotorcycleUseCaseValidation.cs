@@ -7,7 +7,7 @@ namespace Application.UseCases.Motorcycles.RemoveMotorcycle;
 public class RemoveMotorcycleUseCaseValidation : IRemoveMotorcycleUseCase
 {
     private readonly IRemoveMotorcycleUseCase _useCase;
-    private readonly IMotorcycleRepository _repository;
+    private readonly IRentRepository _rentRepository;
     private IRemoveMotorcycleOutputPort _outputPort = null!;
 
     public void SetOutputPort(IRemoveMotorcycleOutputPort outputPort)
@@ -16,21 +16,25 @@ public class RemoveMotorcycleUseCaseValidation : IRemoveMotorcycleUseCase
          _useCase.SetOutputPort(outputPort);
     }
 
-    public RemoveMotorcycleUseCaseValidation(IRemoveMotorcycleUseCase useCase, IMotorcycleRepository repository)
+    public RemoveMotorcycleUseCaseValidation(IRemoveMotorcycleUseCase useCase, IRentRepository rentRepository)
     {
         _useCase = useCase;
-        _repository = repository;
+        _rentRepository = rentRepository;
     }
 
     public async Task ExecuteAsync(RemoveMotorcycleInput input)
-    {
-        //TODO: change to verify if motorcycle has active rent
-        
-        var motorcycle = await _repository.GetMotorcycle(input.Id);
+    {        
+        var rents = await _rentRepository.GetRents(new(motorcycleId: input.Id));
 
-        if (motorcycle is null)
+        if (rents is null)
         {
-            _outputPort.NotFound();
+            _outputPort.Error("Error to get Rents on check if MotorcycleId has Rent");
+            return;
+        }
+
+        if (rents.Any())
+        {
+            _outputPort.Invalid("MotorcycleId has Rent and can not be removed");
             return;
         }
 
