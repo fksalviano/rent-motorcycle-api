@@ -40,7 +40,7 @@ sequenceDiagram
         API->>GetEndpoint : GetCustomers(taxId?, driverLicenseNumber?)
     end
     GetEndpoint->>GetUseCase : Execute(input)
-    GetUseCase->>GetRepository : GetCustomers(filter.Id)
+    GetUseCase->>GetRepository : GetCustomers(filter)
     GetRepository-->>GetUseCase : Customer[]
     alt is GetById
         GetUseCase-->>GetEndpoint : Output(Customer)
