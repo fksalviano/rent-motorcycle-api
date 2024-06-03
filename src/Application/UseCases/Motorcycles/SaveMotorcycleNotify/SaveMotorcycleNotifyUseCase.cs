@@ -10,6 +10,7 @@ public class SaveMotorcycleNotifyUseCase : ISaveMotorcycleNotifyUseCase
     private readonly IMotorcycleNotifyRepository _repository;
 
     private ISaveMotorcycleNotifyOutputPort _outputPort = null!;
+    
     public void SetOutputPort(ISaveMotorcycleNotifyOutputPort outputPort) =>
         _outputPort = outputPort;
 
