@@ -9,6 +9,7 @@ public static class RepositoriesInstallerExtensions
     public static IServiceCollection AddRepositories(this IServiceCollection services) =>
         services
             .AddScoped<IMotorcycleRepository, MotorcycleRepository>()
+            .AddScoped<IMotorcycleNotifyRepository, MotorcycleNotifyRepository>()
             .AddScoped<ICustomerRepository, CustomerRepository>()
             .AddScoped<IRentRepository, RentRepository>();
 }

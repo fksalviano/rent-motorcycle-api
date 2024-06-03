@@ -33,7 +33,6 @@ public class SaveCustomerUseCaseValidation : AbstractValidator<SaveCustomerInput
     public async Task ExecuteAsync(SaveCustomerInput input)
     {
         var validation = await ValidateAsync(input);
-
         if (!validation.IsValid)
         {
             var messages = string.Join(", ", validation.Errors.Select(error => error.ErrorMessage));

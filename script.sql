@@ -12,7 +12,8 @@ CREATE TABLE Motorcycle
 
 CREATE TABLE MotorcycleNotify
 (
-    MotorcycleId UUID NOT NULL PRIMARY KEY    
+    MotorcycleId UUID NOT NULL PRIMARY KEY,
+    CreatedAt DATE NOT NULL
 );
 
 CREATE TABLE Customer

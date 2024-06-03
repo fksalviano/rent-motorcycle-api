@@ -4,7 +4,9 @@ API to control customers rent.
 
 .Net 8 API using Clean Architecture, DDD and and Vertical Slice archutecture.
 
-Postgres database with Dapper, Docker and Docker Compose to build and run the application.
+Using Postgres database with Dapper ORM and Kafka message broker with MassTransit lib to produce and consume messages.
+
+Docker and Docker Compose to build and run the application.
 
 ### Clean Architecture
 

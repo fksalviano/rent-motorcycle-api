@@ -3,11 +3,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpoints();
 builder.Services.AddUseCases();
-
-builder.Services.AddConfigurations(builder.Configuration);
+builder.Services.AddNotifications(builder.Configuration);
 
 builder.Services.AddRepositories();
 builder.Services.AddDatabase(builder.Configuration);
+
+builder.Services.AddConfigurations(builder.Configuration);
+builder.Services.AddMassTransitKafka(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new()

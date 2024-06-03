@@ -33,7 +33,6 @@ public class SaveMotorcycleUseCaseValidation : AbstractValidator<SaveMotorcycleI
     public async Task ExecuteAsync(SaveMotorcycleInput input)
     {
         var validation = await ValidateAsync(input);
-
         if (!validation.IsValid)
         {
             var messages = string.Join(", ", validation.Errors.Select(error => error.ErrorMessage));
