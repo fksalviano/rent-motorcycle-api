@@ -14,6 +14,8 @@ public struct CustomerFilter
     }
 
     public CustomerFilter(Guid id) => Id = id;
+
     public CustomerFilter(string taxId) => TaxId = taxId;
+    
     public CustomerFilter(int driverLicenseNumber) => DriverLicenseNumber = driverLicenseNumber;
 }

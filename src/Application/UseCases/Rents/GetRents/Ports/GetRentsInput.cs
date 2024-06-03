@@ -3,8 +3,8 @@ namespace Application.UseCases.Rents.GetRents.Ports;
 public struct GetRentsInput
 {
     public Guid? Id { get; }
-    public DateTime? EndDatePreview { get; set; }
-    public Guid? CustomerId { get; }    
+    public Guid? CustomerId { get; }
+    public DateTime? EndDatePreview { get; }    
 
     public readonly bool IsGetById => Id is not null;
     public readonly bool IsEndPreview => EndDatePreview is not null;

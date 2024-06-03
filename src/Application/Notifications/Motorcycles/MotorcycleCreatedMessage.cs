@@ -4,17 +4,12 @@ namespace Application.Notifications.Motorcycles;
 
 public class MotorcycleCreatedMessage
 {
-    public Guid MotorcycleId { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public Motorcycle Motorcycle { get; }
+    public DateTime CreatedAt { get; }
 
-    public MotorcycleCreatedMessage(Motorcycle motorcycle)
+    public MotorcycleCreatedMessage(Motorcycle motorcycle, DateTime createdAt)
     {
-        MotorcycleId = motorcycle.Id;
-        CreatedAt = DateTime.Now;
-    }
-
-    public MotorcycleCreatedMessage()
-    {
-        // parameterless constructor to deserialize message
-    }
+        Motorcycle = motorcycle;
+        CreatedAt = createdAt;
+    }    
 }

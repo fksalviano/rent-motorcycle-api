@@ -10,7 +10,7 @@ public class SaveCustomerUseCase : ISaveCustomerUseCase
     private readonly ICustomerRepository _repository;
     private ISaveCustomerOutputPort _outputPort = null!;
 
-    public void SetOutputPort(ISaveCustomerOutputPort outputPort)  =>
+    public void SetOutputPort(ISaveCustomerOutputPort outputPort) =>
         _outputPort = outputPort;
 
     public SaveCustomerUseCase(ICustomerRepository repository)

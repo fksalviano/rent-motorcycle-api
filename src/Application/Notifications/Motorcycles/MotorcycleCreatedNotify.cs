@@ -21,7 +21,7 @@ public class MotorcycleCreatedNotify : IMotorcycleCreatedNotify
 
     public async Task Send(Motorcycle motorcycle)
     {
-        var message = new MotorcycleCreatedMessage(motorcycle);
+        var message = new MotorcycleCreatedMessage(motorcycle, DateTime.Now);
         try
         {
             await _topicProducer.Produce(message);

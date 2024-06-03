@@ -17,6 +17,7 @@ public class MotorcycleNotifyRepository : IMotorcycleNotifyRepository
         _connection = connection;
         _logger = logger;
     }
+    
     public async Task<int?> CreateMotorcycleNotify(MotorcycleNotify motorcycleNotify)
     {
         const string sql =

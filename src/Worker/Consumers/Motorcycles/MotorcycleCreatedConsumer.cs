@@ -11,6 +11,8 @@ public class MotorcycleCreatedConsumer : IConsumer<MotorcycleCreatedMessage>, IS
     private readonly ISaveMotorcycleNotifyUseCase _saveNotifyUseCase;
     private readonly ILogger<MotorcycleCreatedConsumer> _logger;
 
+    private const int YearToSaveNotify = 2024;
+
     public MotorcycleCreatedConsumer(ISaveMotorcycleNotifyUseCase saveNotifyUseCase, ILogger<MotorcycleCreatedConsumer> logger)
     {
         _saveNotifyUseCase = saveNotifyUseCase;
@@ -21,14 +23,19 @@ public class MotorcycleCreatedConsumer : IConsumer<MotorcycleCreatedMessage>, IS
 
     public async Task Consume(ConsumeContext<MotorcycleCreatedMessage> context)
     {
-        var message = context.Message;        
+        var message = context.Message;
 
-        var input = new SaveMotorcycleNotifyInput(message.MotorcycleId, message.CreatedAt);
+        if (message.Motorcycle.Year != YearToSaveNotify)
+        {
+            _logger.LogInformation($"Motorcycle created notify not saved, Year is not {YearToSaveNotify} Id={message.Motorcycle.Id}");
+            return;
+        }
 
+        var input = new SaveMotorcycleNotifyInput(message.Motorcycle.Id, message.CreatedAt);
         await _saveNotifyUseCase.Execute(input);
     }
 
-    void ISaveMotorcycleNotifyOutputPort.OK(SaveMotorcycleNotifyOutput output) =>
+    void ISaveMotorcycleNotifyOutputPort.OK(SaveMotorcycleNotifyOutput output) =>docker-compose
         _logger.LogInformation($"Motorcycle created notify saved Id={output.MotorcycleId}");
 
     void ISaveMotorcycleNotifyOutputPort.Error(string message) =>

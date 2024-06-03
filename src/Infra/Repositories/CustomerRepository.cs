@@ -10,7 +10,7 @@ namespace Infra.Repositories;
 public class CustomerRepository : ICustomerRepository
 {
     private readonly IDbConnection _connection;
-        private readonly ILogger<CustomerRepository> _logger;
+    private readonly ILogger<CustomerRepository> _logger;
 
     public CustomerRepository(IDbConnection connection, ILogger<CustomerRepository> logger)
     {
