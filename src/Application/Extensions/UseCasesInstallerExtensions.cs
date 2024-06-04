@@ -17,6 +17,8 @@ using Application.UseCases.Rents.GetRents.Abstractions;
 using Application.UseCases.Rents.GetRents;
 using Application.UseCases.Rents.SaveRent;
 using Application.UseCases.Rents.SaveRent.Abstractions;
+using Application.UseCases.Customers.SaveCustomerDocument;
+using Application.UseCases.Customers.SaveCustomerDocument.Abstractions;
 
 
 namespace Application.Extensions;
@@ -45,6 +47,10 @@ public static class UseCasesInstallerExtensions
             .AddScoped<SaveCustomerUseCase>()
             .AddScoped<ISaveCustomerUseCase>(provider => new SaveCustomerUseCaseValidation(
                 provider.GetRequiredService<SaveCustomerUseCase>(), provider.GetRequiredService<ICustomerRepository>()))
+
+            .AddScoped<SaveCustomerDocumentUseCase>()
+            .AddScoped<ISaveCustomerDocumentUseCase>(provider => new SaveCustomerDocumentUseCaseValidation(
+                provider.GetRequiredService<SaveCustomerDocumentUseCase>(), provider.GetRequiredService<ICustomerRepository>()))
 
              // Rents
             .AddScoped<IGetRentsUseCase, GetRentsUseCase>()

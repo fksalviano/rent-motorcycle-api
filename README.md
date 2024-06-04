@@ -57,12 +57,12 @@ Approcah used to design the project, for example: use case folders has subfolfer
 
 - **GetRents**:
     Get Rents by Id or filtring by Customer Id.
-    
+
     When Getting By Id, is possible to query an End Date Preview and preview the End Value based on this date.
 
 - **SaveRent**:
     Create a Rent or update End Date and calculate End Value.
-    
+
 
 ## API
 
@@ -73,7 +73,9 @@ The API micro-service with REST Endpoints mapped without Controllers, using Mini
     GET    /api/customer          Get Customers filtering by optional params
     POST   /api/customer          Creates a Customer
     GET    /api/customer/{id}     Get Customer by Id
-    PUT    /api/customer/{id}     Update a Customer    
+    PUT    /api/customer/{id}     Update a Customer
+    
+    PUT    /api/customer/{id}/document/upload  Upload Customer document image
 
     GET    /api/motorcycle        Get Motorcycles filtering by optional params
     POST   /api/motorcycle        Create a Motorcycle
@@ -89,14 +91,17 @@ The API micro-service with REST Endpoints mapped without Controllers, using Mini
 ### Dependency Injection
 
 The Dependence Injection is adding services segregated by Installers Extensions:
-    
-    .AddEndpoints();
-    .AddUseCases(); 
 
-    .AddConfigurations();
-    
+    .AddEndpoints();
+    .AddUseCases();
+
+    .AddNotifications();
+    .AddConsumers();
+
     .AddRepositories();
     .AddDatabase();
+
+    .AddConfigurations();
 
 ## Tests
 
@@ -104,7 +109,7 @@ The Dependence Injection is adding services segregated by Installers Extensions:
     Tests for each class and methods independently.
 
 - **Integration Tests**:
-    Tests for each endpoint call, testing the integration of all classes and methods.
+    Tests for each endpoint call, testing the integration of all classes and methods (Requires docker compose up).
 
 ## Configuration
 
@@ -172,7 +177,7 @@ direction LR
 
 # API Architecture Sequnce Diagram
 
-This is the general architecture used by the default to implement all the endpoints and use cases showed below.
+This is the general architecture used by default to implement all the endpoints and use cases showed below.
 
 ```mermaid
 sequenceDiagram

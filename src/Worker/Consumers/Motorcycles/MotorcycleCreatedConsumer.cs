@@ -35,7 +35,7 @@ public class MotorcycleCreatedConsumer : IConsumer<MotorcycleCreatedMessage>, IS
         await _saveNotifyUseCase.Execute(input);
     }
 
-    void ISaveMotorcycleNotifyOutputPort.OK(SaveMotorcycleNotifyOutput output) =>docker-compose
+    void ISaveMotorcycleNotifyOutputPort.OK(SaveMotorcycleNotifyOutput output) =>
         _logger.LogInformation($"Motorcycle created notify saved Id={output.MotorcycleId}");
 
     void ISaveMotorcycleNotifyOutputPort.Error(string message) =>

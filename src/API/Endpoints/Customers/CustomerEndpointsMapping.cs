@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Domain.Base;
 using API.Endpoints.Customers.GetCustomers;
 using API.Endpoints.Customers.SaveCustomer;
+using API.Endpoints.Customers.SaveCustomerDocument;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace API.Endpoints.Customers;
@@ -39,5 +40,13 @@ public static class CustomerEndpointsMapping
                     .Produces<SaveCustomerResponse>(Status202Accepted)
                     .Produces<SaveCustomerResponse>(Status404NotFound)
                     .Produces<ResponseBase<object>>(Status400BadRequest);
+
+            group.MapPut("/{id}/document/upload", ([FromServices] SaveCustomerDocumentEndpoint endpoint, [FromRoute] Guid id, [FromForm] SaveCustomerDocumentRequest request) => endpoint
+                .SaveCustomerDocument(request, id))                    
+                    .WithSummary("Upload Customer document image")
+                    .Produces<SaveCustomerDocumentResponse>(Status202Accepted)
+                    .Produces<SaveCustomerDocumentResponse>(Status404NotFound)
+                    .Produces<ResponseBase<object>>(Status400BadRequest)
+                    .DisableAntiforgery();
         });      
 }

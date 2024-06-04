@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using API.Endpoints.Customers.GetCustomers;
 using API.Endpoints.Customers.SaveCustomer;
+using API.Endpoints.Customers.SaveCustomerDocument;
 using API.Endpoints.Motorcycles.GetMotorcycles;
 using API.Endpoints.Motorcycles.RemoveMotorcycle;
 using API.Endpoints.Motorcycles.SaveMotorcycle;
@@ -22,6 +23,7 @@ public static class EndpointsInstallerExtension
             // Customers
             .AddScoped<GetCustomersEndpoint>()
             .AddScoped<SaveCustomerEndpoint>()
+            .AddScoped<SaveCustomerDocumentEndpoint>()
 
             // Rents
             .AddScoped<GetRentsEndpoint>()
