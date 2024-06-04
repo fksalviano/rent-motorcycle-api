@@ -1,5 +1,3 @@
-using Domain.Model.Enums;
-
 namespace Application.UseCases.Customers.SaveCustomerDocument.Ports;
 
 public struct SaveCustomerDocumentInput

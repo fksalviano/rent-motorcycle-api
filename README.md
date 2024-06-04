@@ -27,6 +27,9 @@ Application projects segregated by domains:
 - **Infra**:
     Database connection, Repositories and Message Broker connection.
 
+- **Worker**
+    Messages consumers.
+
 ### Vertical Slice
 
 Approcah used to design the project, for example: use case folders has subfolfers with all that only the use case uses, excepting for shared classes like Domain Models and Repositories. It tryes to let together as maximum as possible the dependencies and avoid external dependencies.
@@ -41,13 +44,19 @@ Approcah used to design the project, for example: use case folders has subfolfer
 - **SaveCustomer**:
     Create or update a Customer.
 
+- **SaveCustomerDocument**:
+    Upload Customer document image.
+
 ### Motorcycles
 
 - **GetMotorcycles**:
     Get Motorcycles by Id or filtring by Plate.
 
 - **SaveMotorcycle**:
-    Create oa Motorcycle or update Plate.
+    Create a Motorcycle or update Plate.
+
+- **SaveMotorcycleNotify**:
+    Save a Motorcycle created message received notify.
 
 - **RemoveMotorcycle**:
     Delete a Motorcycle if has no related Customer Rent.
@@ -74,7 +83,7 @@ The API micro-service with REST Endpoints mapped without Controllers, using Mini
     POST   /api/customer          Creates a Customer
     GET    /api/customer/{id}     Get Customer by Id
     PUT    /api/customer/{id}     Update a Customer
-    
+
     PUT    /api/customer/{id}/document/upload  Upload Customer document image
 
     GET    /api/motorcycle        Get Motorcycles filtering by optional params
@@ -173,9 +182,10 @@ classDiagram
 direction LR
     Customer <-- Rent
     Rent --> Motorcycle
+    Rent --> RentPlan
 ````
 
-# API Architecture Sequnce Diagram
+# API Architecture Sequence Diagram
 
 This is the general architecture used by default to implement all the endpoints and use cases showed below.
 

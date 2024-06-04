@@ -1,7 +1,6 @@
 using Application.UseCases.Customers.SaveCustomer.Abstractions;
 using Application.UseCases.Customers.SaveCustomer.Ports;
 using Infra.Repositories.Abstractions;
-using Infra.Repositories.Filters;
 using FluentValidation;
 
 namespace Application.UseCases.Customers.SaveCustomer;
@@ -26,8 +25,7 @@ public class SaveCustomerUseCaseValidation : AbstractValidator<SaveCustomerInput
         RuleFor(input => input.Name).NotEmpty().WithMessage("Name is empty");
         RuleFor(input => input.TaxId).NotEmpty().WithMessage("TaxId is empty");
         RuleFor(input => input.BornDate).NotEmpty().WithMessage("BornDate is invalid");
-        RuleFor(input => input.DriverLicenseNumber).NotEmpty().WithMessage("DriverLicenseNumber is invalid");
-        RuleFor(input => input.DriverLicenseType).NotNull().WithMessage("DriverLicenseType is empty");        
+        RuleFor(input => input.DriverLicenseNumber).NotEmpty().WithMessage("DriverLicenseNumber is invalid");        
     }
 
     public async Task ExecuteAsync(SaveCustomerInput input)
