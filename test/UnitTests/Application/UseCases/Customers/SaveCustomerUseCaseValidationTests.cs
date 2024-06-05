@@ -33,15 +33,19 @@ public class SaveCustomerUseCaseValidationTests
 
     [Fact]
     public async Task ShouldExecuteWithSuccess()
-    {                
+    {
+        // Arrange
         var input = _fixture.Create<SaveCustomerInput>();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync(_fixture.CreateMany<Customer>(0));
 
+
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _useCase
             .Verify(useCase => useCase.ExecuteAsync(input));
     }
@@ -58,14 +62,17 @@ public class SaveCustomerUseCaseValidationTests
     [MemberData(nameof(InvalidData))]
     public async Task ShouldExecuteWithInvalid(string name, string taxId, DateTime bornDate, int licenseNumber)
     {
+        // Arrange
         var input = new SaveCustomerInput(name, taxId, bornDate, licenseNumber, default);
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync(_fixture.CreateMany<Customer>(1));
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Invalid(It.IsAny<string>()));
     }
@@ -73,14 +80,17 @@ public class SaveCustomerUseCaseValidationTests
     [Fact]
     public async Task ShouldExecuteWithError()
     {
-        var input = _fixture.Create<SaveCustomerInput>();        
+        // Arrange
+        var input = _fixture.Create<SaveCustomerInput>();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync((IEnumerable<Customer>?)null);
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Act
         _outputPort
             .Verify(output => output.Error(It.IsAny<string>()));
     }
@@ -88,7 +98,8 @@ public class SaveCustomerUseCaseValidationTests
     [Fact]
     public async Task ShouldExecuteWithExistsTaxId()
     {
-        var input = _fixture.Create<SaveCustomerInput>();        
+        // Arrange
+        var input = _fixture.Create<SaveCustomerInput>();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.Is<CustomerFilter>(filter => filter.TaxId != null)))
@@ -98,8 +109,10 @@ public class SaveCustomerUseCaseValidationTests
             .Setup(repo => repo.GetCustomers(It.Is<CustomerFilter>(filter => filter.DriverLicenseNumber != null)))
             .ReturnsAsync(_fixture.CreateMany<Customer>(0));
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Invalid(It.IsAny<string>()));
     }
@@ -107,7 +120,8 @@ public class SaveCustomerUseCaseValidationTests
     [Fact]
     public async Task ShouldExecuteWithExistsLicenseNumber()
     {
-        var input = _fixture.Create<SaveCustomerInput>();        
+        // Arrange
+        var input = _fixture.Create<SaveCustomerInput>();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.Is<CustomerFilter>(filter => filter.DriverLicenseNumber != null)))
@@ -115,10 +129,12 @@ public class SaveCustomerUseCaseValidationTests
 
         _repository
             .Setup(repo => repo.GetCustomers(It.Is<CustomerFilter>(filter => filter.TaxId != null)))
-            .ReturnsAsync(_fixture.CreateMany<Customer>(0));        
+            .ReturnsAsync(_fixture.CreateMany<Customer>(0));
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Invalid(It.IsAny<string>()));
     }

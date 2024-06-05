@@ -25,16 +25,18 @@ public class SaveCustomerDocumentUseCaseTests
 
     [Fact]
     public async Task ShouldExecuteWithSuccess()
-    { 
+    {
+        // Arrange
         var id = _fixture.Create<Guid>();
         var fileType = _fixture.Create<string>();
 
         var fileStream = GetFixtureStream();
-
         var input = new SaveCustomerDocumentInput(id, fileStream, fileType);
 
+        // Act        
         await _sut.ExecuteAsync(input);
-
+        
+        // Assert
         _outputPort
             .Verify(output => output.Ok(It.IsAny<SaveCustomerDocumentOutput>()));
     }
@@ -49,5 +51,5 @@ public class SaveCustomerDocumentUseCaseTests
 
         stream.Position = 0;
         return stream;
-    }    
+    }
 }

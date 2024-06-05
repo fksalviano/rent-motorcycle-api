@@ -32,6 +32,7 @@ public class SaveCustomerUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithSuccessCreated()
     {
+        // Arrange
         var request = _fixture.Create<SaveCustomerRequest>();
         var input = request.ToInput();
 
@@ -39,8 +40,10 @@ public class SaveCustomerUseCaseTests
             .Setup(repo => repo.CreateCustomer(It.IsAny<Customer>()))
             .ReturnsAsync(1);
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Created(It.IsAny<SaveCustomerOutput>()));
     }
@@ -48,6 +51,7 @@ public class SaveCustomerUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithSuccessUpdated()
     {
+        // Arrange
         var request = _fixture.Create<SaveCustomerRequest>();
         var input = request.ToInput(_fixture.Create<Guid>());
 
@@ -55,8 +59,10 @@ public class SaveCustomerUseCaseTests
             .Setup(repo => repo.UpdateCustomer(It.IsAny<Customer>()))
             .ReturnsAsync(1);
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Updated(It.IsAny<SaveCustomerOutput>()));
     }
@@ -64,6 +70,7 @@ public class SaveCustomerUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithNotFound()
     {
+        // Arrange
         var request = _fixture.Create<SaveCustomerRequest>();
         var input = request.ToInput(_fixture.Create<Guid>());
 
@@ -71,8 +78,10 @@ public class SaveCustomerUseCaseTests
             .Setup(repo => repo.UpdateCustomer(It.IsAny<Customer>()))
             .ReturnsAsync(0);
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.NotFound());
     }
@@ -80,6 +89,7 @@ public class SaveCustomerUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithError()
     {
+        // Arrange        
         var request = _fixture.Create<SaveCustomerRequest>();
         var input = request.ToInput(_fixture.Create<Guid>());
 
@@ -87,8 +97,10 @@ public class SaveCustomerUseCaseTests
             .Setup(repo => repo.CreateCustomer(It.IsAny<Customer>()))
             .ReturnsAsync((int?)null);
 
+        // Act        
         await _sut.ExecuteAsync(input);
-
+        
+        // Assert
         _outputPort
             .Verify(output => output.Error(It.IsAny<string>()));
     }

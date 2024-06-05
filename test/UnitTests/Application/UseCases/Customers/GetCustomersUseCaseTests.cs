@@ -32,14 +32,17 @@ public class GetCustomersUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithSuccess()
     {
-        var input = new GetCustomersInput();            
+        // Arrange
+        var input = new GetCustomersInput();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync(_fixture.CreateMany<Customer>());
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Ok(It.IsAny<GetCustomersOutput>()));
     }
@@ -47,14 +50,17 @@ public class GetCustomersUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithSuccessById()
     {
+        // Arrange
         var input = new GetCustomersInput(_fixture.Create<Guid>());
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync(_fixture.CreateMany<Customer>(1));
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Ok(It.IsAny<GetCustomersOutputById>()));
     }
@@ -62,14 +68,17 @@ public class GetCustomersUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithNotFound()
     {
+        // Arrange
         var input = _fixture.Create<GetCustomersInput>();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync(_fixture.CreateMany<Customer>(0));
 
+        // Act
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.NotFound());
     }
@@ -77,14 +86,18 @@ public class GetCustomersUseCaseTests
     [Fact]
     public async Task ShouldExecuteWithError()
     {
+        // Arrange
         var input = _fixture.Create<GetCustomersInput>();
 
         _repository
             .Setup(repo => repo.GetCustomers(It.IsAny<CustomerFilter>()))
             .ReturnsAsync((IEnumerable<Customer>?)null);
 
+
+        // Act        
         await _sut.ExecuteAsync(input);
 
+        // Assert
         _outputPort
             .Verify(output => output.Error(It.IsAny<string>()));
     }
