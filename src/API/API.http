@@ -1,0 +1,134 @@
+###
+//API requests using REST Client extension to execute
+
+@api = http://localhost:5115/api
+
+###
+# @name getMotorcycles
+
+GET {{api}}/motorcycle
+
+###
+@motorcycleId={{getMotorcycles.response.body.$.result.motorcycles[0].id}}
+
+# @name getMotorcycleById
+
+GET {{api}}/motorcycle/{{motorcycleId}}
+
+###
+@plate={{getMotorcycleById.response.body.$.result.motorcycle.plate}}
+
+GET {{api}}/motorcycle
+  ?plate={{plate}}
+
+###
+
+POST {{api}}/motorcycle
+Content-Type: application/json
+
+{
+  "year": 2023,
+  "model": "CG",
+  "plate": "XXX1234"
+}
+
+###
+
+POST {{api}}/motorcycle
+Content-Type: application/json
+
+{
+  "year": 2024,
+  "model": "Titan",
+  "plate": "YYY4567"
+}
+
+###
+
+PUT {{api}}/motorcycle/{{motorcycleId}}
+Content-Type: application/json
+
+{  
+  "plate": "YYY0000"
+}
+
+###
+
+DELETE {{api}}/motorcycle/{{motorcycleId}}
+
+###
+# @name getCustomers
+
+GET {{api}}/customer
+  # ?driverLicenseNumber=99999999
+  # ?taxId=111111111111
+
+###
+# @name getCustomersById
+@customerId={{getCustomers.response.body.$.result.customers[0].id}}
+
+GET {{api}}/customer/{{customerId}}
+
+###
+
+POST {{api}}/customer
+Content-Type: application/json
+
+{
+  "name" : "Tste",
+  "taxId" : "111111111111",
+  "bornDate" : "2024-05-30T22:26:09.401Z",
+  "driverLicenseNumber" : 888888888,
+  "driverLicenseType" : "A"
+}
+
+###
+
+PUT {{api}}/customer/{{customerId}}
+Content-Type: application/json
+
+{      
+  "name": "Tste",
+  "taxId": "0000000000",
+  "bornDate": "2024-05-30T00:00:00",
+  "driverLicenseNumber": 99999999,
+  "driverLicenseType": "B"
+}
+
+###
+
+# @name getRents
+
+GET {{api}}/rent
+
+@rentId={{getRents.response.body.$.result.rents[2].id}}
+
+###
+
+# @name getRentById
+
+GET {{api}}/rent/{{rentId}}
+  # ?endDatePreview=2024-06-07T22:35:07.846Z
+
+###
+
+POST {{api}}/rent
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "motorcycleId": "{{motorcycleId}}",
+  "rentDays": 7,  
+  "startDate": "2024-05-31T22:35:11.833Z"
+}
+
+###
+
+PUT {{api}}/rent/{{rentId}}
+Content-Type: application/json
+
+{
+  "endDate": "2024-06-03T22:35:11.846Z"
+}
+
+###
